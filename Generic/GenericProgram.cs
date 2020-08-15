@@ -8,39 +8,38 @@ namespace Generic
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            BusinessClass<string> things = new BusinessClass<string>();
-            things.AddItem("10");
-            foreach (var thing in things.items)
-            {
-                Console.WriteLine(thing);
-            }
-
-            Console.WriteLine("reomoved one is : {0}", things.RemoveItem());
+            BusinessValueClass<int> things = new BusinessValueClass<int>();
+            things.AddItem(10);
+            things.AddItem(15);
+            things.AddItem(12);
+            int i = 1;
+            Console.WriteLine("Get one of [{1}] is : {0}", things.GetItem(i), i);
+            things.GetSelectItem();
 
         }
     }
-    public class BusinessClass<T> where T:class
-    //public class BusinessClass<T> 
+    public class BusinessValueClass<T> where T: struct
+   
     {
-        private int int_counter = 0;
-        public Queue<T> items = new Queue<T>();
+        
+        private List<T> items = new List<T>();
         public void AddItem(T thing)
-        {
-            if (items.Count < 10)
-            {
-                items.Enqueue(thing);
-                Console.WriteLine("{0} is added", thing);
-            }
-            else
-            {
-                items.Dequeue();
-                items.Enqueue(thing);
-                Console.WriteLine("{0} is added with delete", thing);
-            }
+        {            
+            items.Add(thing);
+            Console.WriteLine("{0} is added", thing);                        
         }
-        public T RemoveItem()
+        public T GetItem(int i)
         {
-            return items.Dequeue();
+            return items[i];
+        }
+        public void GetSelectItem()
+        {
+            items.Sort();
+            items.Reverse();
+            foreach (var item in items)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

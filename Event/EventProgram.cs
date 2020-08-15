@@ -7,14 +7,14 @@ namespace Event
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-			//Step 5 - Associate the event with the handler
+			
 			var person = new Person();
 			person.name = "Joe Smith";
 
 			var alarm = new AlarmClock();
+			//Step 5 - Associate the event with the handler
 			alarm.AlarmClockEvent += person.HandleAlarm;
-
-			//Step 6 - Causing the event to occur
+						
 			alarm.Alarm();
 		}
     }
@@ -25,7 +25,7 @@ namespace Event
 
 		public void HandleAlarm(object sender, AlarmClockEventArgs e)
 		{
-			Console.WriteLine("Get out of bed it's {0}", e.time);
+			Console.WriteLine("Action:Get out of bed! Now it's {0}", e.time);
 		}
 
 	}
@@ -37,19 +37,17 @@ namespace Event
 
 		public void Alarm()
 		{
-			Console.WriteLine("Alarm went off!");
+			Console.WriteLine("Alarm Event is triggered!");
 			AlarmClockEventHandeler alarm = AlarmClockEvent;
 			if (AlarmClockEvent != null)
 			{
 				alarm(this, new AlarmClockEventArgs(DateTime.Now));
 			}
-
 		}
 	}
 
 	// Step 2 - Setting up the delegate for the event
 	public delegate void AlarmClockEventHandeler(object source, AlarmClockEventArgs e);
-
 
 	// Step 1 - Creating a class to pass arguments for the event handlers 	
 	public class AlarmClockEventArgs : EventArgs
@@ -58,7 +56,6 @@ namespace Event
 		public AlarmClockEventArgs(DateTime time)
 		{
 			this.time = time;
-
 		}
 	}
 }
